@@ -6,9 +6,10 @@ import joblib
 # Get the directory where app.py is located
 curr_dir = Path(__file__).parent
 
-model = joblib.load("ridge_patient_footfall_model.pkl")
-scaler = joblib.load("ridge_scaler.pkl")
-model_features = joblib.load("model_features.pkl")
+# Load files using the absolute path
+model = joblib.load(curr_dir / "ridge_patient_footfall_model.pkl")
+scaler = joblib.load(curr_dir / "ridge_scaler.pkl")
+features = joblib.load(curr_dir / "model_features.pkl")
 
 st.title("Healthcare Facility Footfall Predictor")
 
