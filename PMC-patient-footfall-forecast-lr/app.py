@@ -10,7 +10,7 @@ curr_dir = Path(__file__).parent
 # Load files using the absolute path
 model = joblib.load(curr_dir / "ridge_patient_footfall_model.pkl")
 scaler = joblib.load(curr_dir / "ridge_scaler.pkl")
-features = joblib.load(curr_dir / "model_features.pkl")
+model_features = joblib.load(curr_dir / "model_features.pkl")
 
 st.title("Healthcare Facility Footfall Predictor")
 
