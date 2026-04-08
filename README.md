@@ -1,6 +1,4 @@
-This is a clean, professional `README.md` file tailored specifically for your deployment repository. It highlights the technical stack, the predictive power of your model, and instructions on how to run the app.
 
----
 
 # 🚀 Employee Performance Prediction Deployment
 
