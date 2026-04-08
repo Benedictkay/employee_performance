@@ -8,7 +8,6 @@ import joblib
 # 2. LOAD SAVED OBJECTS
 
 scaler = joblib.load('scaler.pkl')
-selector = joblib.load('selector.pkl')
 model = joblib.load('final_employee_model.pkl')
 
 st.set_page_config(page_title="Employee Performance Predictor", layout="centered")
@@ -22,14 +21,22 @@ st.markdown("Predict employee performance using key influencing factors.")
 
 st.header("🧾 Enter Employee Details")
 
-env_sat = st.slider("Environment Satisfaction (1-4)", 1, 4, 3)
+env_sat = st.slider("Environment Satisfaction", 1, 4, 3)
 salary_hike = st.slider("Salary Hike (%)", 10, 25, 15)
 years_promo = st.slider("Years Since Last Promotion", 0, 15, 2)
 years_role = st.slider("Years in Current Role", 0, 20, 5)
-total_exp = st.slider("Total Work Experience (Years)", 0, 40, 10)
+hourly_rate = st.slider("Hourly Rate", 30, 100, 60)
+dept_dev = st.selectbox("Department (Development?)", [0, 1])
+years_company = st.slider("Years at Company", 0, 40, 5)
+age = st.slider("Age", 18, 60, 30)
+years_manager = st.slider("Years with Manager", 0, 20, 5)
+distance = st.slider("Distance From Home", 1, 30, 10)
 
 # IMPORTANT: Must match training feature order/structure
-input_data = np.array([[env_sat, salary_hike, years_promo, years_role, total_exp]])
+input_data = np.array([[env_sat, salary_hike, years_promo, years_role, hourly_rate, dept_dev, years_company, age, years_manager, distance]])
+
+input_scaled = scaler.transform(input_data)
+prediction = model.predict(input_scaled)
 
 # 5. PREDICTION PIPELINE
 
@@ -37,12 +44,10 @@ if st.button("Predict Performance"):
 
     # Step 1: Scale
     input_scaled = scaler.transform(input_data)
+    
+    # Step 2: Predict
 
-    # Step 2: Feature Selection
-    input_selected = selector.transform(input_scaled)
-
-    # Step 3: Predict
-    prediction = model.predict(input_selected)[0]
+    prediction = model.predict(input_scaled)[0]
 
   
     # 6. DISPLAY RESULT
