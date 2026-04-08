@@ -5,10 +5,12 @@ import streamlit as st
 import numpy as np
 import joblib
 
+
+
 # 2. LOAD SAVED OBJECTS
 
-scaler = joblib.load('scaler.pkl')
-model = joblib.load('final_employee_model.pkl')
+scaler = joblib.load('employee_performance/scaler.pkl')
+model = joblib.load('employee_performance/final_employee_model.pkl')
 
 st.set_page_config(page_title="Employee Performance Predictor", layout="centered")
 
@@ -26,14 +28,14 @@ salary_hike = st.slider("Salary Hike (%)", 10, 25, 15)
 years_promo = st.slider("Years Since Last Promotion", 0, 15, 2)
 years_role = st.slider("Years in Current Role", 0, 20, 5)
 hourly_rate = st.slider("Hourly Rate", 30, 100, 60)
-dept_dev = st.selectbox("Department (Development?)", [0, 1])
 years_company = st.slider("Years at Company", 0, 40, 5)
 age = st.slider("Age", 18, 60, 30)
 years_manager = st.slider("Years with Manager", 0, 20, 5)
 distance = st.slider("Distance From Home", 1, 30, 10)
+total_working_years = st.slider("Total Working Years", 0, 40, 10)
 
 # IMPORTANT: Must match training feature order/structure
-input_data = np.array([[env_sat, salary_hike, years_promo, years_role, hourly_rate, dept_dev, years_company, age, years_manager, distance]])
+input_data = np.array([[env_sat, salary_hike, years_promo, years_role, hourly_rate, years_company, age, years_manager, distance, total_working_years]])
 
 input_scaled = scaler.transform(input_data)
 prediction = model.predict(input_scaled)
